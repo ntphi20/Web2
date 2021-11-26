@@ -6,14 +6,16 @@ $user = NULL; //Add new user
 $id = NULL;
 
 if (!empty($_GET['id'])) {
-    $id = $_GET['id'];
-    $user = $userModel->findUserById($id);//Update existing user
+    $id = base64_decode($_GET['id']);
+    $newid = substr($id,10);
+    //var_dump($newid);
+    $user = $userModel->findUserById($newid);//Update existing user
 }
 
 
 if (!empty($_POST['submit'])) {
 
-    if (!empty($id)) {
+    if (!empty($newid)) {
         $userModel->updateUser($_POST);
     } else {
         $userModel->insertUser($_POST);
@@ -32,12 +34,12 @@ if (!empty($_POST['submit'])) {
 <?php include 'views/header.php'?>
 <div class="container">
 
-    <?php if ($user || empty($id)) { ?>
+    <?php if ($user || empty(substr($id,10))) { ?>
         <div class="alert alert-warning" role="alert">
             User profile
         </div>
         <form method="POST">
-            <input type="hidden" name="id" value="<?php echo $id ?>">
+            <input type="hidden" name="id" value="<?php echo substr($id,10) ?>">
             <div class="form-group">
                 <label for="name">Name</label>
                 <span><?php if (!empty($user[0]['name'])) echo $user[0]['name'] ?></span>
