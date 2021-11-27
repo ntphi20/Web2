@@ -4,6 +4,7 @@ require_once 'BaseModel.php';
 
 class UserModel extends BaseModel {
     public $key = "ksghd09kjjhih";
+
     public function findUserById($newid) {
         $sql = 'SELECT * FROM users WHERE id = '.$newid;
         $user = $this->select($sql);
@@ -43,6 +44,16 @@ class UserModel extends BaseModel {
      * @return mixed
      */
     public function updateUser($input) {
+
+        $name = htmlspecialchars($input['name']);
+        $fullname = htmlspecialchars($input['fullname']);
+        $password = md5(htmlspecialchars($input['password']));
+        $email = htmlspecialchars($input['email']);
+        $type = htmlspecialchars($input['type']);
+        $version = $input['version'] + 1;
+        $id = htmlspecialchars($input['id']);
+        $uuid = md5($name . $fullname . $email . $type . $password) . rand(0, 1);
+
         $sql = 'UPDATE users SET 
                 name = "' . $input['name'] .'", 
                  fullname = "' . $input['fullname'] .'",
@@ -61,6 +72,14 @@ class UserModel extends BaseModel {
      * @return mixed
      */
     public function insertUser($input) {
+
+        $name = htmlspecialchars($input['name']);
+        $fullname = htmlspecialchars($input['fullname']);
+        $email = htmlspecialchars($input['email']);
+        $type = htmlspecialchars($input['type']);
+        $password = md5($input['password']);
+        $uuid = md5($name . $fullname . $email . $type . $password) . rand(0, 1);
+
         $sql = "INSERT INTO `app_web1`.`users` (`name`, `fullname`, `email`, `type`, `password`) VALUES (" .
                 "'" . $input['name'] . "','".$input['fullname']."', '".$input['email']."','".$input['type']."', '".$input['password']."')";
 
@@ -91,4 +110,17 @@ class UserModel extends BaseModel {
     {
         return $a + $b;
     }
+
+    public static function GenerateToken() {
+        $token = base64_encode(md5(time()) . rand());
+        return $token;
+      }
+  
+      public static function CompareTokens($field_token, $session_token) {
+        if ($field_token === $session_token) {
+          return true;
+          die();
+        }
+        return false;
+      }
 }
