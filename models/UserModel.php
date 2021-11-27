@@ -42,6 +42,7 @@ class UserModel extends BaseModel {
      * @param $input
      * @return mixed
      */
+    //update user
     public function updateUser($input) {
         $sql = 'UPDATE users SET 
                 name = "' . $input['name'] .'", 
@@ -60,6 +61,7 @@ class UserModel extends BaseModel {
      * @param $input
      * @return mixed
      */
+    //add user
     public function insertUser($input) {
         $sql = "INSERT INTO `app_web1`.`users` (`name`, `fullname`, `email`, `type`, `password`) VALUES (" .
                 "'" . $input['name'] . "','".$input['fullname']."', '".$input['email']."','".$input['type']."', '".$input['password']."')";

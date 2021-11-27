@@ -30,6 +30,8 @@ abstract class BaseModel {
      * Select statement
      * @param $sql
      */
+
+    //select
     protected function select($sql) {
         $result = $this->query($sql);
         $rows = [];
@@ -46,6 +48,7 @@ abstract class BaseModel {
      * @param $sql
      * @return mixed
      */
+    //delete
     protected function delete($sql) {
         $result = $this->query($sql);
         return $result;
@@ -56,6 +59,7 @@ abstract class BaseModel {
      * @param $sql
      * @return mixed
      */
+    //update
     protected function update($sql) {
         $result = $this->query($sql);
         return $result;
@@ -65,6 +69,7 @@ abstract class BaseModel {
      * Insert statement
      * @param $sql
      */
+    //add
     protected function insert($sql) {
         $result = $this->query($sql);
         return $result;
