@@ -9,7 +9,7 @@ if (!empty($_GET['id'])) {
     $id = base64_decode($_GET['id']);
     $newid = substr($id,10);
     //var_dump($newid);
-    $user = $userModel->findUserById($newid);//Delete existing user
+    $userModel->deleteUserById($newid);//Delete existing user 
 }
 header('location: list_users.php');
 ?>
